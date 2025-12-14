@@ -28,6 +28,7 @@ public class CommunicationSatellite extends Satellite{
         }
         System.out.println(name + ": Передача данных со скоростью " + bandwidth + " Мбит/c");
         sendData(bandwidth);
+        consumeBattery(sendDataOperationCost);
     }
 
     @Override

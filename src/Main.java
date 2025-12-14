@@ -65,6 +65,16 @@ public class Main {
         constellation1.executeAllMissions();
         constellation2.executeAllMissions();
 
+        System.out.println("-".repeat(40));
+        System.out.println("ГРУППИРОВКА: " + constellation1.getName());
+        System.out.println(constellation1.getSatellites());
+        System.out.println("-".repeat(40));
+        System.out.println("ГРУППИРОВКА: " + constellation2.getName());
+        System.out.println(constellation2.getSatellites());
+
+
+
+
 
     }
 }
