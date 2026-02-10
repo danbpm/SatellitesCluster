@@ -2,7 +2,7 @@ public class ImagingSatellite extends Satellite{
     double resolution;
     int photosTaken;
 
-    public final static double takePhotoOperationCost = 0.08;
+    public final static double takePhotoOperationCost = 8; // в процентах заряда
 
     public ImagingSatellite(String name, double batteryLevel, double resolution){
         super(name, batteryLevel);
@@ -18,7 +18,7 @@ public class ImagingSatellite extends Satellite{
     }
 
     private void takePhoto(){
-        if (isActive) {
+        if (satelliteState.isActive()) {
             photosTaken += 1;
             System.out.println(name + ": Cнимок #" + photosTaken + " сделан");
         }
@@ -26,27 +26,28 @@ public class ImagingSatellite extends Satellite{
 
     @Override
     public void performMission(){
-        if (!isActive) {
+        if (!satelliteState.isActive()) {
             System.out.println(name + ": Не может сделать фото - не активен");
             return;
         }
-        if (batteryLevel < takePhotoOperationCost){
+        if (energySystem.getBatteryLevel() < takePhotoOperationCost){
             System.out.println(name + ": Не может сделать фото - низкий заряд батареи. Заряд: " +
-                    (int)(batteryLevel * 100) + "% " + "(затраты на фото: " +
+                    energySystem.getBatteryLevel() + "% " + "(затраты на фото: " +
                     (int)(takePhotoOperationCost * 100) + "%)");
             return;
         }
         takePhoto();
-        consumeBattery(takePhotoOperationCost);
+        energySystem.consume(takePhotoOperationCost);
     }
 
     @Override
     public String toString(){
         return "ImagingSatellite{" +
-                "name: " + name +
-                ", resolution: " + resolution +
-                ", photosTaken: " + photosTaken +
-                ", batteryLevel: " + batteryLevel +
+                "name= " + name +
+                ", resolution=" + resolution +
+                ", photosTaken=" + photosTaken +
+                ", energySystem=" + energySystem +
+                ", satelliteState=" + satelliteState +
                 "}";
     }
 

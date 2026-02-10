@@ -2,49 +2,37 @@ public abstract class Satellite {
     /// Имя КА
     protected String name;
 
-    /// Флаг активности
-    protected boolean isActive;
+    ///  Энергетическая система
+    protected  EnergySystem energySystem;
 
-    /// Уровень заряда батареи
-    protected double batteryLevel;
-
-    /// Минимальный уровень батареи для проведения операций
-    public static double minBatteryLevel = 0.2;
+    ///  Состояние КА
+    protected  SatelliteState satelliteState;
 
     public Satellite(String name, double batteryLevel){
         this.name = name;
-        this.batteryLevel = batteryLevel;
-        System.out.println("Создан спутник: " + name + " (заряд: " + (int)(batteryLevel * 100) + "%" + ")");
+        this.energySystem = new EnergySystem(batteryLevel);
+        this.satelliteState = new SatelliteState();
+
+        System.out.println("Создан спутник: " + name + " (заряд: " + energySystem.getBatteryLevel() + "%" + ")");
     }
 
     public boolean activate(){
-        if (isActive){
-            System.out.println(name + ": Уже активирован");
+        if (satelliteState.activate(energySystem.hasSufficientPower())) {
+            System.out.println(name + " : Активация успешна");
+
             return true;
         }
-        if (batteryLevel <= minBatteryLevel){
-            System.out.println(name + ": Невозможно активировать. Низкий заряд батареи. Заряд: "
-                    + (int)(batteryLevel * 100) + "%");
-            return false;
-        }
-        isActive = true;
-        System.out.println(name + ": Активация успешна");
-        return true;
+        System.out.println(name + " : Ошибка активации. " +
+                satelliteState.getStatusMessage() +
+                ". Заряд батареи: " +
+                energySystem.getBatteryLevel() + "%.");
+
+        return false;
     }
 
     public void deactivate(){
-        if (isActive) {
-            isActive = false;
-        }
-    }
-
-    public void consumeBattery(double amount){
-        if (amount >= 0) {
-            batteryLevel -= amount;
-            if (batteryLevel <= minBatteryLevel && isActive) {
-                System.out.println(name + ": Низкий заряд батареи. Деактивация...");
-                deactivate();
-            }
+        if (satelliteState.isActive()) {
+            satelliteState.deactivate();
         }
     }
 
