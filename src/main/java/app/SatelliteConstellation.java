@@ -1,3 +1,5 @@
+package app;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +26,6 @@ public class SatelliteConstellation {
     }
 
     public void executeAllMissions(){
-        System.out.println("ВЫПОЛНЕНИЕ МИССИЙ ГРУППИРОВКИ " + constellationName);
-        System.out.println("=".repeat(60));
         for (Satellite sat : satellites) {
             sat.performMission();
         }

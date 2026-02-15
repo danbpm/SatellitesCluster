@@ -1,3 +1,4 @@
+package app;
 public class EnergySystem {
     private double batteryLevel;
 

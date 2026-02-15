@@ -1,3 +1,5 @@
+package app;
+
 public abstract class Satellite {
     /// Имя КА
     protected String name;
@@ -6,24 +8,32 @@ public abstract class Satellite {
     protected  EnergySystem energySystem;
 
     ///  Состояние КА
-    protected  SatelliteState satelliteState;
+    protected  SatelliteState state;
 
     public Satellite(String name, double batteryLevel){
         this.name = name;
         this.energySystem = new EnergySystem(batteryLevel);
-        this.satelliteState = new SatelliteState();
+        this.state = new SatelliteState();
 
         System.out.println("Создан спутник: " + name + " (заряд: " + energySystem.getBatteryLevel() + "%" + ")");
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public SatelliteState getState() {
+        return state;
+    }
+
     public boolean activate(){
-        if (satelliteState.activate(energySystem.hasSufficientPower())) {
+        if (state.activate(energySystem.hasSufficientPower())) {
             System.out.println(name + " : Активация успешна");
 
             return true;
         }
         System.out.println(name + " : Ошибка активации. " +
-                satelliteState.getStatusMessage() +
+                state.getStatusMessage() +
                 ". Заряд батареи: " +
                 energySystem.getBatteryLevel() + "%.");
 
@@ -31,8 +41,8 @@ public abstract class Satellite {
     }
 
     public void deactivate(){
-        if (satelliteState.isActive()) {
-            satelliteState.deactivate();
+        if (state.isActive()) {
+            state.deactivate();
         }
     }
 

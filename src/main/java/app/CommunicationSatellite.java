@@ -1,7 +1,9 @@
+package app;
+
 public class CommunicationSatellite extends Satellite{
     private final double bandwidth;
 
-    public final static double sendDataOperationCost = 5; //  в процентах заряда
+    public final static double sendDataOperationCost = 0.05;
 
     public CommunicationSatellite(String name, double batteryLevel, double bandwidth){
         super(name, batteryLevel);
@@ -18,7 +20,7 @@ public class CommunicationSatellite extends Satellite{
 
     @Override
     public void performMission(){
-        if (!satelliteState.isActive()) {
+        if (!state.isActive()) {
             System.out.println(name + ": Не может выполнить отправку - не активен");
             return;
         }
@@ -37,7 +39,7 @@ public class CommunicationSatellite extends Satellite{
                 "name=" + name +
                 ", bandwidth=" + bandwidth +
                 ", energySystem=" + energySystem +
-                ", satelliteState=" + satelliteState +
+                ", satelliteState=" + state +
                 "}";
     }
 

@@ -1,8 +1,9 @@
+package app;
 public class ImagingSatellite extends Satellite{
     double resolution;
     int photosTaken;
 
-    public final static double takePhotoOperationCost = 8; // в процентах заряда
+    public final static double takePhotoOperationCost = 0.08;
 
     public ImagingSatellite(String name, double batteryLevel, double resolution){
         super(name, batteryLevel);
@@ -18,7 +19,7 @@ public class ImagingSatellite extends Satellite{
     }
 
     private void takePhoto(){
-        if (satelliteState.isActive()) {
+        if (state.isActive()) {
             photosTaken += 1;
             System.out.println(name + ": Cнимок #" + photosTaken + " сделан");
         }
@@ -26,14 +27,14 @@ public class ImagingSatellite extends Satellite{
 
     @Override
     public void performMission(){
-        if (!satelliteState.isActive()) {
+        if (!state.isActive()) {
             System.out.println(name + ": Не может сделать фото - не активен");
             return;
         }
         if (energySystem.getBatteryLevel() < takePhotoOperationCost){
             System.out.println(name + ": Не может сделать фото - низкий заряд батареи. Заряд: " +
                     energySystem.getBatteryLevel() + "% " + "(затраты на фото: " +
-                    (int)(takePhotoOperationCost * 100) + "%)");
+                    (int)(takePhotoOperationCost * 100)  + "%)");
             return;
         }
         takePhoto();
@@ -47,7 +48,7 @@ public class ImagingSatellite extends Satellite{
                 ", resolution=" + resolution +
                 ", photosTaken=" + photosTaken +
                 ", energySystem=" + energySystem +
-                ", satelliteState=" + satelliteState +
+                ", satelliteState=" + state +
                 "}";
     }
 

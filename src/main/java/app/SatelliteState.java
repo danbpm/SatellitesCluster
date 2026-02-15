@@ -1,3 +1,5 @@
+package app;
+
 public class SatelliteState {
 
     private boolean isActive = false;
@@ -37,7 +39,8 @@ public class SatelliteState {
     public String toString() {
         return "SatelliteState{" +
                 "isActive=" + isActive +
-                ", statusMessage=" + statusMessage;
+                ", statusMessage=" + statusMessage +
+                "}";
     }
 
 
