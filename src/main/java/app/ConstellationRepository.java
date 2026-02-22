@@ -19,7 +19,7 @@ public class ConstellationRepository {
         SatelliteConstellation constellation = constellations.get(name);
         if (constellation == null) {
             throw new RuntimeException("Группировка не найдена: " + name);
-        }
+            }
         return constellation;
     }
 
